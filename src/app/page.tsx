@@ -1,10 +1,21 @@
 import Image from "next/image";
-import { AlignCenter, Bell, Calendar, ChevronDown, Download, Maximize2, MessageSquareMore, MoveUpRight } from "lucide-react";
+import { AlignCenter, Bell, Calendar, ChevronDown, Download, Mail, Maximize2, MessageSquareDot, MessageSquareMore, MoveUpRight } from "lucide-react";
 
 import demographImg from "../../public/demo-grapg-img.png"
 import demoProfileImg from "../../public/demo-profile-img.png"
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import { DEMO_TABLE_DATA } from "@/lib/data";
 
 
 const profileList = new Array(5).fill({
@@ -183,14 +194,14 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section>
+      <section className="space-y-4">
         <header className="flex items-center justify-between">
           <h1 className="flex items-center gap-2 font-[600] text-[16px]">
             Team Members
             <ChevronDown />
           </h1>
           <div className="flex items-center gap-4">
-            <Input 
+            <Input
               placeholder="Search..."
               className="w-[20vw]"
             />
@@ -205,6 +216,34 @@ export default function Home() {
             </Button>
           </div>
         </header>
+        <div className="p-2 bg-white rounded-xl">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[300px]">Name</TableHead>
+                <TableHead className="text-center">Task Overdue</TableHead>
+                <TableHead className="text-center">Weekly Score</TableHead>
+                <TableHead>Department</TableHead>
+                <TableHead>Branch</TableHead>
+                <TableHead className="w-[300px]">Not Approved Count</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {DEMO_TABLE_DATA.map((data, idx) => (
+                <TableRow key={idx}>
+                  <TableCell>{data.name}</TableCell>
+                  <TableCell className="text-center">{data.taskOverdue}</TableCell>
+                  <TableCell className="text-center">{data.weeklyScore}</TableCell>
+                  <TableCell>{data.dept}</TableCell>
+                  <TableCell>{data.branch}</TableCell>
+                  <TableCell>{data.notApprovedCount}</TableCell>
+                  <TableCell><Mail /></TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </section>
     </main>
   );
