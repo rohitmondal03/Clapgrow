@@ -1,21 +1,25 @@
+"use client";
+
 import Image from "next/image";
-import { AlignCenter, Bell, Calendar, ChevronDown, Download, Mail, Maximize2, MessageSquareDot, MessageSquareMore, MoveUpRight } from "lucide-react";
+import { useState } from "react";
+import { AlignCenter, Bell, Calendar, ChevronDown, ChevronLeft, ChevronRight, Download, Mail, Maximize2, MessageSquareDot, MessageSquareMore, MoveUpRight } from "lucide-react";
 
 import demographImg from "../../public/demo-grapg-img.png"
 import demoProfileImg from "../../public/demo-profile-img.png"
+import { DEMO_TABLE_DATA } from "@/lib/data";
+import { TableFilter } from "@/components/table-filter";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { DEMO_TABLE_DATA } from "@/lib/data";
 
 
 const profileList = new Array(5).fill({
@@ -27,8 +31,10 @@ const profileList = new Array(5).fill({
 
 
 export default function Home() {
+  const [isTable, setTableOpen] = useState(false);
+
   return (
-    <main className="px-10 bg-[rgb(240,245,250)] space-y-8">
+    <main className="px-10 bg-[rgb(240,245,250)] space-y-8 py-6">
       <header className="flex items-center justify-between py-6">
         <h1 className="font-[600] text-[22px]">
           Member Insights
@@ -208,9 +214,16 @@ export default function Home() {
             <Button variant={"secondary"} className="bg-white border">
               <Download />
             </Button>
-            <Button variant={"secondary"} className="bg-white border">
-              <AlignCenter />
-            </Button>
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant={"secondary"} className="bg-white border">
+                  <AlignCenter />
+                </Button>
+              </SheetTrigger>
+              <SheetContent>
+                <TableFilter />
+              </SheetContent>
+            </Sheet>
             <Button variant={"secondary"} className="bg-white border">
               <Maximize2 />
             </Button>
@@ -225,19 +238,28 @@ export default function Home() {
                 <TableHead className="text-center">Weekly Score</TableHead>
                 <TableHead>Department</TableHead>
                 <TableHead>Branch</TableHead>
-                <TableHead className="w-[300px]">Not Approved Count</TableHead>
+                <TableHead className="w-[300px] text-center">Not Approved Count</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {DEMO_TABLE_DATA.map((data, idx) => (
                 <TableRow key={idx}>
-                  <TableCell>{data.name}</TableCell>
+                  <TableCell className="flex items-center gap-4">
+                    <Checkbox />
+                    <Image
+                      src={demoProfileImg}
+                      alt="profile img"
+                      width={35}
+                      height={35}
+                    />
+                    {data.name}
+                  </TableCell>
                   <TableCell className="text-center">{data.taskOverdue}</TableCell>
                   <TableCell className="text-center">{data.weeklyScore}</TableCell>
                   <TableCell>{data.dept}</TableCell>
                   <TableCell>{data.branch}</TableCell>
-                  <TableCell>{data.notApprovedCount}</TableCell>
+                  <TableCell className="text-center">{data.notApprovedCount}</TableCell>
                   <TableCell><Mail /></TableCell>
                 </TableRow>
               ))}
