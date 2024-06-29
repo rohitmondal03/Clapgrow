@@ -8,10 +8,12 @@ import demographImg from "../../public/demo-grapg-img.png"
 import demoProfileImg from "../../public/demo-profile-img.png"
 import { DEMO_TABLE_DATA } from "@/lib/data";
 import { TableFilter } from "@/components/table-filter";
+import { SideBar } from "@/components/side-bar";
+import { EmployeeSheetSection } from "@/components/employee-sheet-section";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import {
   Table,
   TableBody,
@@ -20,7 +22,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { SideBar } from "@/components/side-bar";
 
 
 const profileList = new Array(5).fill({
@@ -61,6 +62,17 @@ export default function Home() {
             <MessageSquareMore
               className="text-zinc-500"
             />
+            <div className="flex items-center gap-1 cursor-pointer">
+              <Image
+                src={demoProfileImg}
+                alt="profile img"
+                width={35}
+                height={35}
+              />
+              <ChevronDown 
+                className="text-xs text-zinc-500"
+              />
+            </div>
           </div>
         </header>
         <section className={`
@@ -241,7 +253,7 @@ export default function Home() {
                     <AlignCenter />
                   </Button>
                 </SheetTrigger>
-                <SheetContent>
+                <SheetContent className="w-[500px]">
                   <TableFilter />
                 </SheetContent>
               </Sheet>
@@ -293,14 +305,10 @@ export default function Home() {
                         <TableCell><Mail /></TableCell>
                       </TableRow>
                     </SheetTrigger>
-                    <SheetContent className="w-[600px]">
-                      <SheetHeader>
-                        <SheetTitle>Are you absolutely sure?</SheetTitle>
-                        <SheetDescription>
-                          This action cannot be undone. This will permanently delete your account
-                          and remove your data from our servers.
-                        </SheetDescription>
-                      </SheetHeader>
+                    <SheetContent className="overflow-y-scroll">
+                      <EmployeeSheetSection 
+                        data={data}
+                      />
                     </SheetContent>
                   </Sheet>
                 ))}

@@ -36,3 +36,13 @@ export const SIDEBAR_LINKS = [
     Icon: HelpCircle,
   }
 ]
+
+
+export const DEMO_ONE_TIME_TASK = new Array(20).fill(
+  {
+    task: "Inventory statement check (COGS)",
+    status: Math.random() > 0.5 ? "Overdue" : "Upcoming",
+    assignee: "Employee 1",
+    dueDate: new Date(),
+  }
+)
